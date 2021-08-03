@@ -33,6 +33,9 @@ public class Usuario {
     @NotNull
     private LocalDateTime instante = LocalDateTime.now();
 
+    @Deprecated
+    private Usuario() {}
+
     public Usuario(@NotBlank @Email String email, @NotNull @Valid SenhaLimpa senhaLimpa) {
         Assert.isTrue(StringUtils.hasLength(email), "email não pode ficar em branco");
         Assert.notNull(senhaLimpa, "a senha não pode ser nula");
