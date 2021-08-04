@@ -20,9 +20,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    private AutenticacaoService autenticacaoService;
+
+    @Autowired
+    private TokenServiceClass tokenServiceClass;
+
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
-   /* @Override
+   @Override
     @Bean
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
@@ -32,23 +38,25 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
-    } */
+    }
 
     //config de autorização
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
+                .antMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
+                .anyRequest().authenticated()
                 .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-               // .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenServiceClass, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(new AutenticacaoTokenFilter(tokenServiceClass, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
     //config de recursos estáticos(js, css, imagens...)
-    /*@Override
+    @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
-    }*/
+    }
 
 }
