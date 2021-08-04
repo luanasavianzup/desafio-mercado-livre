@@ -19,7 +19,6 @@ import java.util.Set;
 public class ProdutoFormRequest {
 
     @NotBlank
-    @UniqueValue(domainClass = Produto.class, fieldName = "nome")
     private String nome;
     @NotNull
     @Positive
