@@ -1,4 +1,4 @@
-package br.com.zup.luanasavian.mercadolivre.config.security;
+package br.com.zup.luanasavian.mercadolivre.dto;
 
 public class TokenDto {
     private String token;

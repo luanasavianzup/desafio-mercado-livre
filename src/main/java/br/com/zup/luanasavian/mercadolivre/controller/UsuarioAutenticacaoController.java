@@ -1,9 +1,8 @@
 package br.com.zup.luanasavian.mercadolivre.controller;
 
-import br.com.zup.luanasavian.mercadolivre.config.security.TokenDto;
+import br.com.zup.luanasavian.mercadolivre.dto.TokenDto;
 import br.com.zup.luanasavian.mercadolivre.config.security.TokenServiceClass;
 import br.com.zup.luanasavian.mercadolivre.request.LoginFormRequest;
-import br.com.zup.luanasavian.mercadolivre.request.UsuarioFormRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -7,32 +7,32 @@ import br.com.zup.luanasavian.mercadolivre.validation.UniqueValue;
 
 import javax.persistence.EntityManager;
 import javax.validation.constraints.NotBlank;
+import java.util.Optional;
 
 public class CategoriaFormRequest {
 
     @NotBlank
     @UniqueValue(domainClass = Categoria.class, fieldName = "nome")
     private String nome;
-    @ExistsId(domainClass = Categoria.class, fieldName = "id")
-    private Long categoriaMaeId;
+    private String categoriaMaeNome;
 
-    public CategoriaFormRequest(@NotBlank String nome, Long categoriaMaeId) {
+    public CategoriaFormRequest(@NotBlank String nome, String categoriaMaeNome) {
         this.nome = nome;
-        this.categoriaMaeId = categoriaMaeId;
+        this.categoriaMaeNome = categoriaMaeNome;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public Long getCategoriaMaeId() {
-        return categoriaMaeId;
+    public String getCategoriaMaeNome() {
+        return categoriaMaeNome;
     }
 
-    public Categoria toModel(EntityManager manager) {
+    public Categoria toModel(CategoriaRepository categoriaRepository) {
         Categoria categoria = new Categoria(nome);
-        if (categoriaMaeId != null) {
-            Categoria categoriaMae = manager.find(Categoria.class, categoriaMaeId);
+        if (categoriaMaeNome != null) {
+            Optional<Categoria> categoriaMae = categoriaRepository.findByNome(categoriaMaeNome);
             categoria.setCategoriaMae(categoriaMae);
         }
         return categoria;

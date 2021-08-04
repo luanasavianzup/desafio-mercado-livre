@@ -1,5 +1,6 @@
 package br.com.zup.luanasavian.mercadolivre.model;
 
+import br.com.zup.luanasavian.mercadolivre.dto.SenhaLimpa;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,11 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 

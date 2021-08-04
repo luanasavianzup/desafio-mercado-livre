@@ -2,9 +2,10 @@ package br.com.zup.luanasavian.mercadolivre.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Optional;
 
 @Entity
-@Table(name = "tb_categoria")
+@Table(name = "tb_categorias")
 public class Categoria {
 
     @Id
@@ -30,7 +31,7 @@ public class Categoria {
         return categoriaMae;
     }
 
-    public void setCategoriaMae(Categoria categoriaMae) {
-        this.categoriaMae = categoriaMae;
+    public void setCategoriaMae(Optional<Categoria> categoriaMae) {
+        this.categoriaMae = categoriaMae.get();
     }
 }

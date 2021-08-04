@@ -23,13 +23,10 @@ public class CategoriaController {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    @PersistenceContext
-    private EntityManager manager;
-
     @PostMapping
     @Transactional
     public void post(@RequestBody @Valid CategoriaFormRequest form, UriComponentsBuilder uriBuilder) {
-        Categoria categoria = form.toModel(manager);
+        Categoria categoria = form.toModel(categoriaRepository);
         categoriaRepository.save(categoria);
 
         URI uri = uriBuilder.path("/categorias/{id}").buildAndExpand(categoria.getId()).toUri();
