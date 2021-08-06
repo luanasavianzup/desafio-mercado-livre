@@ -38,6 +38,8 @@ public class Produto {
     private Usuario dono;
     @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
     private Set<Caracteristica> caracteristicas = new HashSet<>();
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private Set<ImagemProduto> imagens = new HashSet<>();
 
     @Deprecated
     private Produto() {
@@ -93,6 +95,19 @@ public class Produto {
 
     public Set<Caracteristica> getCaracteristicas() {
         return caracteristicas;
+    }
+
+    public Set<ImagemProduto> getImagens() {
+        return imagens;
+    }
+
+    public void associaImagens(Set<String> links) {
+        Set<ImagemProduto> imagens =  links.stream().map(link -> new ImagemProduto(this, link)).collect(Collectors.toSet());
+        this.imagens.addAll(imagens);
+    }
+
+    public boolean pertenceAoUsuario(Usuario possivelDono) {
+        return this.dono.equals(possivelDono);
     }
 
     @Override

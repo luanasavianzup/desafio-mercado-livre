@@ -22,6 +22,11 @@ public class Caracteristica {
     @ManyToOne
     private Produto produto;
 
+    @Deprecated
+    public  Caracteristica() {
+
+    }
+
     public Caracteristica(@NotBlank String nome, @NotBlank String descricao, @NotNull @Valid Produto produto) {
         this.nome = nome;
         this.descricao = descricao;

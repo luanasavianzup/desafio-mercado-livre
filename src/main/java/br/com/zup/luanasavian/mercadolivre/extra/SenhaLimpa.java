@@ -1,10 +1,9 @@
-package br.com.zup.luanasavian.mercadolivre.dto;
+package br.com.zup.luanasavian.mercadolivre.extra;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 //Representa uma senha limpa no sistema

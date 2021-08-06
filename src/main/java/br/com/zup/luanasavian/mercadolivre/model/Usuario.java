@@ -1,6 +1,6 @@
 package br.com.zup.luanasavian.mercadolivre.model;
 
-import br.com.zup.luanasavian.mercadolivre.dto.SenhaLimpa;
+import br.com.zup.luanasavian.mercadolivre.extra.SenhaLimpa;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
