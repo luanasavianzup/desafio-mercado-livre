@@ -1,4 +1,4 @@
-package br.com.zup.luanasavian.mercadolivre.extra;
+package br.com.zup.luanasavian.mercadolivre.compartilhada;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

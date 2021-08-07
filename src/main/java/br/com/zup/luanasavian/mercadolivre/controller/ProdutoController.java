@@ -1,7 +1,6 @@
 package br.com.zup.luanasavian.mercadolivre.controller;
 
-import br.com.zup.luanasavian.mercadolivre.extra.FakeUploader;
-import br.com.zup.luanasavian.mercadolivre.extra.Uploader;
+import br.com.zup.luanasavian.mercadolivre.compartilhada.Uploader;
 import br.com.zup.luanasavian.mercadolivre.model.Produto;
 import br.com.zup.luanasavian.mercadolivre.model.Usuario;
 import br.com.zup.luanasavian.mercadolivre.repository.ProdutoRepository;
@@ -11,7 +10,6 @@ import br.com.zup.luanasavian.mercadolivre.request.ProdutoFormRequest;
 import br.com.zup.luanasavian.mercadolivre.validation.ProibeCaracteristicasComNomeIgualValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;

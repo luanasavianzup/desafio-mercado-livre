@@ -1,4 +1,4 @@
-package br.com.zup.luanasavian.mercadolivre.extra;
+package br.com.zup.luanasavian.mercadolivre.compartilhada;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

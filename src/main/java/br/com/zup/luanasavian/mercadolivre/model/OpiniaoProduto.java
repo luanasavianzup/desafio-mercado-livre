@@ -48,11 +48,11 @@ public class OpiniaoProduto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OpiniaoProduto that = (OpiniaoProduto) o;
-        return nota == that.nota && titulo.equals(that.titulo) && descricao.equals(that.descricao);
+        return nota == that.nota && Objects.equals(titulo, that.titulo) && Objects.equals(descricao, that.descricao) && Objects.equals(usuario, that.usuario) && Objects.equals(produto, that.produto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nota, titulo, descricao);
+        return Objects.hash(nota, titulo, descricao, usuario, produto);
     }
 }

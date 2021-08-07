@@ -1,6 +1,6 @@
 package br.com.zup.luanasavian.mercadolivre.request;
 
-import br.com.zup.luanasavian.mercadolivre.extra.SenhaLimpa;
+import br.com.zup.luanasavian.mercadolivre.compartilhada.SenhaLimpa;
 import br.com.zup.luanasavian.mercadolivre.model.Usuario;
 import br.com.zup.luanasavian.mercadolivre.validation.UniqueValue;
 import org.hibernate.validator.constraints.Length;

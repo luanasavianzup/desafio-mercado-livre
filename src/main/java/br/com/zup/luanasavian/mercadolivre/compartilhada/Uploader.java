@@ -1,4 +1,4 @@
-package br.com.zup.luanasavian.mercadolivre.extra;
+package br.com.zup.luanasavian.mercadolivre.compartilhada;
 
 import org.springframework.web.multipart.MultipartFile;
 

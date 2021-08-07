@@ -37,8 +37,10 @@ public class Produto {
     private Set<Caracteristica> caracteristicas = new HashSet<>();
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<ImagemProduto> imagens = new HashSet<>();
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
-    private List<OpiniaoProduto> opiniao = new ArrayList<>();
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
+    private Set<OpiniaoProduto> opinioes = new HashSet<>();
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
+    private Set<PerguntaProduto> perguntas = new HashSet<>();
 
     @Deprecated
     private Produto() {
