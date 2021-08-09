@@ -8,6 +8,7 @@ import br.com.zup.luanasavian.mercadolivre.repository.ProdutoRepository;
 import br.com.zup.luanasavian.mercadolivre.repository.UsuarioRepository;
 import br.com.zup.luanasavian.mercadolivre.request.OpiniaoProdutoFormRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -28,8 +29,7 @@ public class OpiniaoProdutoController {
 
         @PostMapping("/{id}/opinioes")
         @Transactional
-        public void post (@PathVariable("id") Long id, @RequestBody @Valid OpiniaoProdutoFormRequest form, UriComponentsBuilder uriBuilder) {
-            Usuario consumidor = usuarioRepository.findByEmail("harry@email.com").get();
+        public void post (@PathVariable("id") Long id, @RequestBody @Valid OpiniaoProdutoFormRequest form, UriComponentsBuilder uriBuilder, @AuthenticationPrincipal Usuario consumidor) {
             Produto produto = produtoRepository.findById(id).get();
 
             OpiniaoProduto opiniao = form.toModel(produto, consumidor);

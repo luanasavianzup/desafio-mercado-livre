@@ -10,6 +10,7 @@ import br.com.zup.luanasavian.mercadolivre.request.ProdutoFormRequest;
 import br.com.zup.luanasavian.mercadolivre.validation.ProibeCaracteristicasComNomeIgualValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,9 +31,6 @@ public class ProdutoController {
     private ProdutoRepository produtoRepository;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
     private Uploader fakeUploader;
 
     @PersistenceContext
@@ -45,8 +43,8 @@ public class ProdutoController {
 
     @PostMapping
     @Transactional
-    public void post(@RequestBody @Valid ProdutoFormRequest form, UriComponentsBuilder uriBuilder) {
-        Usuario dono = usuarioRepository.findByEmail("harry@email.com").get();
+    public void post(@RequestBody @Valid ProdutoFormRequest form, UriComponentsBuilder uriBuilder,  @AuthenticationPrincipal Usuario dono) {
+        //Usuario dono = usuarioRepository.findByEmail("harry@email.com").get();
         Produto produto = form.toModel(manager, dono);
         produtoRepository.save(produto);
 
@@ -55,8 +53,7 @@ public class ProdutoController {
 
     @PostMapping("{id}/imagens")
     @Transactional
-    public void adicionaImagensProduto(@PathVariable("id") Long id, @Valid ImagemProdutoFormRequest form, UriComponentsBuilder uriBuilder) {
-        Usuario dono = usuarioRepository.findByEmail("harry@email.com").get();
+    public void adicionaImagensProduto(@PathVariable("id") Long id, @Valid ImagemProdutoFormRequest form, UriComponentsBuilder uriBuilder,  @AuthenticationPrincipal Usuario dono) {
         Produto produto = produtoRepository.findById(id).get();
 
         if(!produto.pertenceAoUsuario(dono)) {

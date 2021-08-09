@@ -10,6 +10,7 @@ import br.com.zup.luanasavian.mercadolivre.repository.ProdutoRepository;
 import br.com.zup.luanasavian.mercadolivre.repository.UsuarioRepository;
 import br.com.zup.luanasavian.mercadolivre.request.PerguntaProdutoFormRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,16 +25,13 @@ public class PerguntaProdutoController {
     @Autowired
     private ProdutoRepository produtoRepository;
     @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
     private PerguntaProdutoRepository perguntaProdutoRepository;
     @Autowired
     private Emails emails;
 
     @PostMapping("/{id}/perguntas")
     @Transactional
-    public void post (@RequestBody @Valid PerguntaProdutoFormRequest form, @PathVariable("id") Long id, UriComponentsBuilder uriBuilder) {
-        Usuario consumidor = usuarioRepository.findByEmail("harry@email.com").get();
+    public void post (@RequestBody @Valid PerguntaProdutoFormRequest form, @PathVariable("id") Long id, UriComponentsBuilder uriBuilder, @AuthenticationPrincipal Usuario consumidor) {
         Produto produto = produtoRepository.findById(id).get();
 
         PerguntaProduto pergunta = form.toModel(produto, consumidor);

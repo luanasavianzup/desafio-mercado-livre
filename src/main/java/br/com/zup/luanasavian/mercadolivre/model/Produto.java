@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Entity
@@ -37,10 +38,11 @@ public class Produto {
     private Set<Caracteristica> caracteristicas = new HashSet<>();
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<ImagemProduto> imagens = new HashSet<>();
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<OpiniaoProduto> opinioes = new HashSet<>();
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
-    private Set<PerguntaProduto> perguntas = new HashSet<>();
+    @OneToMany(mappedBy = "produto")
+    @OrderBy("titulo asc")
+    private SortedSet<PerguntaProduto> perguntas = new TreeSet<>();
 
     @Deprecated
     private Produto() {
@@ -109,6 +111,22 @@ public class Produto {
 
     public boolean pertenceAoUsuario(Usuario possivelDono) {
         return this.dono.equals(possivelDono);
+    }
+
+    public <T> Set<T> mapCaracteristicas(Function<Caracteristica, T> mapFunction) {
+        return this.caracteristicas.stream().map(mapFunction).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapImagens(Function<ImagemProduto, T> mapFunction) {
+        return this.imagens.stream().map(mapFunction).collect(Collectors.toSet());
+    }
+
+    public <T extends Comparable<T>> SortedSet<T> mapPerguntas(Function<PerguntaProduto, T> mapFunction) {
+        return this.perguntas.stream().map(mapFunction).collect(Collectors.toCollection(TreeSet :: new));
+    }
+
+    public Opinioes getOpinioes() {
+        return new Opinioes(this.opinioes);
     }
 
     @Override

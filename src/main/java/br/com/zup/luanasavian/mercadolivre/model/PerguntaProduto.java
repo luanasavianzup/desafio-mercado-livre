@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_perguntas")
-public class PerguntaProduto {
+public class PerguntaProduto implements Comparable<PerguntaProduto>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,5 +65,10 @@ public class PerguntaProduto {
 
     public Usuario getDonoProduto() {
         return produto.getDono();
+    }
+
+    @Override
+    public int compareTo(PerguntaProduto o) {
+        return this.titulo.compareTo(o.titulo);
     }
 }
