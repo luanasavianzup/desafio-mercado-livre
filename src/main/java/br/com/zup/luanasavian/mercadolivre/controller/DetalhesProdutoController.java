@@ -5,6 +5,7 @@ import br.com.zup.luanasavian.mercadolivre.repository.ProdutoRepository;
 import br.com.zup.luanasavian.mercadolivre.request.DetalhesProdutoFormRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -23,11 +24,11 @@ public class DetalhesProdutoController {
 
     @GetMapping("/{id}")
     @Transactional
-    public DetalhesProdutoFormRequest get (@PathVariable("id") Long id) {
+    public ResponseEntity<DetalhesProdutoFormRequest> get (@PathVariable("id") Long id) {
         Optional<Produto> produto =  produtoRepository.findById(id);
         if (produto.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        return new DetalhesProdutoFormRequest(produto.get());
+        return ResponseEntity.ok(new DetalhesProdutoFormRequest(produto.get()));
     }
 }

@@ -1,6 +1,6 @@
 package br.com.zup.luanasavian.mercadolivre.compartilhada;
 
-public enum GatewayPagamento {
+public enum StatusTransacao {
 
-    PAGSEGURO, PAYPAL
+    sucesso, erro
 }

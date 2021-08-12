@@ -10,6 +10,7 @@ import br.com.zup.luanasavian.mercadolivre.repository.UsuarioRepository;
 import br.com.zup.luanasavian.mercadolivre.request.CompraFormRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import org.springframework.validation.BindException;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/compras")
@@ -37,7 +39,7 @@ public class CompraController {
 
     @PostMapping
     @Transactional
-    public String post(@RequestBody @Valid CompraFormRequest form, UriComponentsBuilder uriBuilder, @AuthenticationPrincipal Usuario comprador) throws BindException {
+    public ResponseEntity<?> post(@RequestBody @Valid CompraFormRequest form, UriComponentsBuilder uriBuilder, @AuthenticationPrincipal Usuario comprador) throws BindException {
         Produto produto = produtoRepository.findById(form.getIdProduto()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));;
 
         int quantidade = form.getQuantidade();
@@ -49,14 +51,13 @@ public class CompraController {
             Compra novaCompra = new Compra(produto, quantidade, usuario, gateway);
             compraRepository.save(novaCompra);
 
-            if(gateway.equals(GatewayPagamento.pagseguro)) {
-                String urlRetornoPagseguro = uriBuilder.path("/retorno-pagseguro/{id}")
-                        .buildAndExpand(novaCompra.getId()).toString();
-                return "pagsegurocom?returnId" + novaCompra.getId() + "&redirectUrl=" + urlRetornoPagseguro;
+            if(gateway.equals(GatewayPagamento.PAGSEGURO)) {
+                URI uri = uriBuilder.path("/retorno-pagseguro/{id}").buildAndExpand(novaCompra.getId()).toUri();
+                return ResponseEntity.status(HttpStatus.FOUND).location(uri).build();
+
             } else {
-                String urlRetornoPaypal = uriBuilder.path("/retorno-paypal/{id}")
-                        .buildAndExpand(novaCompra.getId()).toString();
-               return "paypal.com?buyerId" + novaCompra.getId() + "&redirectUrl=" + urlRetornoPaypal;
+                URI uri = uriBuilder.path("/retorno-paypal/{id}").buildAndExpand(novaCompra.getId()).toUri();
+               return ResponseEntity.status(HttpStatus.FOUND).location(uri).build();
             }
         }
 
